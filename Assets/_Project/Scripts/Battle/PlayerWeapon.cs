@@ -128,7 +128,9 @@ public class PlayerWeapon : MonoBehaviour
     [ContextMenu("Shoot")]
     private void Shoot()
     {
-        var projectiles = SpawnProjectiles(5);
+        int howMany = GameData.HowManyAtOnce != -1 ? GameData.HowManyAtOnce : 5;
+
+        var projectiles = SpawnProjectiles(howMany);
         PositionProjectiles(projectiles);
         MoveProjectiles(projectiles);
     }

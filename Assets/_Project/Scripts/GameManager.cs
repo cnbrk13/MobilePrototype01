@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
         GameData.BaseShootSpeed = baseShootSpeed;
         GameData.GridUnlocks = upgradeGrid.UnlockedCells;
         GameData.CalculatedShootSpeed = upgradeGrid.CalculatedShootSpeed;
+        GameData.HowManyAtOnce = upgradeGrid.TotalShootingFromCount;
     }
 
     public bool CanAfford(int amount)

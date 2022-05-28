@@ -31,7 +31,7 @@ public class UpgradeGrid : MonoBehaviour
     public float CellShootInterval => cellShootInterval;
 
     // returns cells count that are currently shooting (or most right)
-    public int TotalShootingFromCount => cells.Count(c => IsCellMostright(c));
+    public int TotalShootingFromCount => cells.Count(c => ShouldShootFromCell(c));
 
 
     public int UnlockedCells => unlockedCells;
