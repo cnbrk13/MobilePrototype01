@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     #region Variables
     [Tooltip("A reference to the player in scene")]
     [SerializeField] private Player player;
-    [SerializeField] private List<Enemy> activeEnemies = new();
+    [SerializeField] private List<Enemy> activeEnemies = new List<Enemy>();
 
 
     [SerializeField] private LevelEndScreenUI levelEndScreen;

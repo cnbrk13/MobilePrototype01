@@ -19,8 +19,8 @@ public class UpgradeGrid : MonoBehaviour
     public int rows;
     public Action ItemAddedOrRemoved;
 
-    private List<GridCell> cells = new();
-    private List<UpgradeItem> placedItems = new();
+    private List<GridCell> cells = new List<GridCell>();
+    private List<UpgradeItem> placedItems = new List<UpgradeItem>();
 
     private int unlockedCells = 0;
     private readonly int maxUnlocked = 25;

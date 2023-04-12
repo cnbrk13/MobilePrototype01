@@ -21,7 +21,7 @@ public class UpgradeItem : MonoBehaviour
     public int PlusBonus => plusBonus;
     public int TimesBonus => timesBonus;
 
-    private List<GridCell> occupiedCells = new();
+    private List<GridCell> occupiedCells = new List<GridCell>();
     private Vector3 startPos;
 
     #endregion
