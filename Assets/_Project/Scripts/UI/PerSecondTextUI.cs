@@ -39,7 +39,7 @@ public class PerSecondTextUI : MonoBehaviour
 
     private void UpdateText()
     {
-        tmp.text = GameManager.Instance.UpgradeGrid.CalculatedShootSpeed * 2 + "/second";
+        tmp.text = GameManager.Instance.UpgradeGrid.CalculatedShootSpeed * 2 + "/s";
     }
 
 

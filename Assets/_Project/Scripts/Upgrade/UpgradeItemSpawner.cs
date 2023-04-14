@@ -45,6 +45,13 @@ public class UpgradeItemSpawner : MonoBehaviour
             var item = Instantiate(randomPrefab);
             item.transform.position = startPos + i * gapSize * Vector3.right;
         }
+
+        for (int i = 0; i < 4; i++)
+        {
+            var randomPrefab = prefabs[Random.Range(0, prefabs.Count)];
+            var item = Instantiate(randomPrefab);
+            item.transform.position = gapSize * Vector3.up * 1.3f + startPos + i * gapSize * Vector3.right;
+        }
     }
 
     #endregion

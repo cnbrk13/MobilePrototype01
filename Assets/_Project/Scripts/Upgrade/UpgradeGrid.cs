@@ -13,7 +13,7 @@ public class UpgradeGrid : MonoBehaviour
     [SerializeField] private float placedItemsZOffset = 0.6f;
 
     [Tooltip("How often should cells with items spawn projectiles")]
-    [SerializeField] private float cellShootInterval;
+    [SerializeField] private float cellShootInterval = 0.2f;
 
     public int columns;
     public int rows;
@@ -49,6 +49,7 @@ public class UpgradeGrid : MonoBehaviour
     {
         //CreateGrid();
         FillCellsList();
+        CheckWhichCellsShouldShoot();
     }
 
     private void Update()
@@ -135,7 +136,7 @@ public class UpgradeGrid : MonoBehaviour
 
     internal int FilledCellsToTheLeft(GridCell gridCell)
     {
-        return cells.Count(c => !c.IsEmpty && c.row == gridCell.row && c.col < gridCell.col && c.col >= 0);
+        return cells.Count(c => !c.IsEmpty && c.row == gridCell.row && c.col < gridCell.col && c.col >= 0) + 1;
     }
 
 
@@ -417,6 +418,12 @@ public class UpgradeGrid : MonoBehaviour
 
     public bool ShouldShootFromCell(GridCell cell)
     {
+        if (cell.IsEmpty && cell.col == 0 && cell.row == 3) // start cell
+        {
+            return true;
+        }
+
+
         if (cell.IsEmpty)
         {
             return false;

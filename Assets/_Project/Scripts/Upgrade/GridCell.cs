@@ -24,8 +24,6 @@ public class GridCell : MonoBehaviour
     private MeshRenderer rend;
     private Coroutine shootingCO;
 
-    private UpgradeGrid grid;
-
     #endregion
 
     #region Unity Methods
@@ -37,7 +35,6 @@ public class GridCell : MonoBehaviour
 
     private void Start()
     {
-        grid = GameManager.Instance.UpgradeGrid;
     }
 
     private void Update()
@@ -85,9 +82,6 @@ public class GridCell : MonoBehaviour
         if (shootingCO != null)
         {
             return;
-            //Debug.LogError("Called StartShooting when shootingCO already running");
-            //StopCoroutine(shootingCO);
-            //shootingCO = null;
         }
 
         shootingCO = StartCoroutine(ShootingLoop());
@@ -116,7 +110,7 @@ public class GridCell : MonoBehaviour
     private float ShootInterval()
     {
         int filledCellCount = GameManager.Instance.UpgradeGrid.FilledCellsToTheLeft(this);
-        return grid.CellShootInterval/(filledCellCount + 1);
+        return GameManager.Instance.UpgradeGrid.CellShootInterval/(filledCellCount + 1);
     }
 
     private void SpawnProjectile()
@@ -124,7 +118,6 @@ public class GridCell : MonoBehaviour
         GridProjectile proj = Instantiate(GameManager.Instance.GridProjPrefab);
 
         proj.transform.position = transform.position - new Vector3(0, 0, 0.5f);
-
     }
 
     #endregion
