@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     #region Variables
 
+    public Transform Body;
 
     private PlayerAnimator playerAnimator;
     private PlayerWeapon weapon;

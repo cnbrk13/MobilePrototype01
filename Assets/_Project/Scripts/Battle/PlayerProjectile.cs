@@ -7,13 +7,16 @@ public class PlayerProjectile : MonoBehaviour
 
     #region Variables
 
+    private ParticleSystem explodePS;
+
+
     #endregion
 
     #region Unity Methods
 
     private void Awake()
     {
-
+        explodePS = GetComponentInChildren<ParticleSystem>();
     }
 
     private void Start()
@@ -26,13 +29,15 @@ public class PlayerProjectile : MonoBehaviour
 
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        if (collision.collider.tag == "Arena")
+        if (collider.tag == "Arena")
         {
             Explode();
         }
     }
+
+
 
 
     #endregion
@@ -41,6 +46,8 @@ public class PlayerProjectile : MonoBehaviour
 
     public void Explode()
     {
+        explodePS.transform.parent = null;
+        explodePS.Play();
         Destroy(gameObject);
     }
 

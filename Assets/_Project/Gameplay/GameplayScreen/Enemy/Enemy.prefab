@@ -384,7 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activatedByCheckpoint: 0
   moveSpeed: 0.5
-  startingHealth: 14
+  startingHealth: 1
 --- !u!54 &1473169801164937907
 Rigidbody:
   m_ObjectHideFlags: 0
