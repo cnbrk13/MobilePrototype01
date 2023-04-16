@@ -9,10 +9,10 @@ public class Player : MonoBehaviour
     #region Variables
 
 
-    private PlayerMoveAnimator moveAnimator;
+    private PlayerAnimator playerAnimator;
     private PlayerWeapon weapon;
 
-    public PlayerMoveAnimator MoveAnimator => moveAnimator;
+    public PlayerAnimator PlayerAnimator => playerAnimator;
 
     public PlayerWeapon Weapon => weapon;
 
@@ -22,12 +22,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        moveAnimator = GetComponent<PlayerMoveAnimator>();
+        playerAnimator = GetComponent<PlayerAnimator>();
     }
 
     private void Start()
     {
-        moveAnimator.StartMoving();
+        playerAnimator.StartMoving();
     }
 
     private void Update()

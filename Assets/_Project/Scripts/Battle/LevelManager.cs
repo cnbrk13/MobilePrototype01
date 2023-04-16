@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour
         // if this is the last enemy, resume player movement 
         if (activeEnemies.Count == 0)
         {
-            player.MoveAnimator.ContinueMoveAnimation();
+            player.PlayerAnimator.ContinueMoveAnimation();
         }
     }
 

@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        LevelManager.Instance.Player.MoveAnimator.CheckpointReached += OnCheckpointReached;
+        LevelManager.Instance.Player.PlayerAnimator.CheckpointReached += OnCheckpointReached;
         slider.value = 1;
         animator.SetFloat("CycleOffsetVal", UnityEngine.Random.value);
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
@@ -16,6 +17,14 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private Transform projectileHolder;
     [SerializeField] private float defaultShootingIntervalInMs = 500f;
 
+    private Animator animator;
+    private List<ParticleSystem> particles;
+
+    
+    private readonly int shootAnimStartTrigger = Animator.StringToHash("StartShoot");
+    private readonly int shootAnimStopTrigger = Animator.StringToHash("StopShoot");
+
+
     private Coroutine shooting_Co;
     private bool isShooting = false;
 
@@ -25,7 +34,8 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Awake()
     {
-
+        animator = GetComponent<Animator>();
+        particles = GetComponentsInChildren<ParticleSystem>().ToList();
     }
 
     private void Start()
@@ -64,6 +74,15 @@ public class PlayerWeapon : MonoBehaviour
 
     #region Methods
 
+    public void StartShootAnim()
+    {
+        animator.SetTrigger(shootAnimStartTrigger);
+    }
+
+    public void StopShootAnim()
+    {
+        animator.SetTrigger(shootAnimStopTrigger);
+    }
 
     public void StartShooting()
     {
@@ -87,6 +106,8 @@ public class PlayerWeapon : MonoBehaviour
         }
 
         shooting_Co = StartCoroutine(ShootingLoop(intervalMilliseconds));
+
+        StartShootAnim();
     }
 
 
@@ -99,6 +120,8 @@ public class PlayerWeapon : MonoBehaviour
         }
 
         isShooting = false;
+
+        StopShootAnim();
     }
 
 
@@ -129,10 +152,20 @@ public class PlayerWeapon : MonoBehaviour
     private void Shoot()
     {
         int howMany = GameData.HowManyAtOnce != -1 ? GameData.HowManyAtOnce : 5;
+        howMany = 1;
 
         var projectiles = SpawnProjectiles(howMany);
         PositionProjectiles(projectiles);
         MoveProjectiles(projectiles);
+        PlayParticles();
+    }
+
+    private void PlayParticles()
+    {
+        foreach (var p in particles)
+        {
+            p.Play();
+        }
     }
 
     private void PositionProjectiles(List<PlayerProjectile> projectiles)
@@ -141,7 +174,7 @@ public class PlayerWeapon : MonoBehaviour
         parent.transform.SetParent(projectileHolder);
 
         var nozzlePos = nozzle.position;
-        float projSize = 0.025f;
+        float projSize = 0.06f;
 
 
         nozzlePos = Vector3.zero;
