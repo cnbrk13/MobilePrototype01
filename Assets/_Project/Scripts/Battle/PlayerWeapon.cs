@@ -100,10 +100,7 @@ public class PlayerWeapon : MonoBehaviour
 
         float intervalMilliseconds = defaultShootingIntervalInMs;
 
-        if (GameData.CalculatedShootSpeed != 0)
-        {
-            intervalMilliseconds = 1000f / GameManager.Instance.UpgradeGrid.CalculatedShootSpeed;
-        }
+        intervalMilliseconds = (1000f / GameManager.Instance.UpgradeGrid.CalculatedShootSpeed) * 4f;
 
         shooting_Co = StartCoroutine(ShootingLoop(intervalMilliseconds));
 

@@ -33,7 +33,6 @@ public class UpgradeGrid : MonoBehaviour
     // returns cells count that are currently shooting (or most right)
     public int TotalShootingFromCount => cells.Count(c => ShouldShootFromCell(c));
 
-
     public int UnlockedCells => unlockedCells;
 
     #endregion
@@ -78,7 +77,7 @@ public class UpgradeGrid : MonoBehaviour
             totalTimes += i.TimesBonus;
         }
 
-        return (float)Math.Round(GameManager.Instance.BaseShootSpeed * totalPlus * totalTimes, 2);
+        return (float)Math.Round((GameManager.Instance.BaseShootSpeed + totalPlus) * totalTimes, 2);
     }
 
     public List<UpgradeItem> GetPlacedItems()
@@ -102,8 +101,6 @@ public class UpgradeGrid : MonoBehaviour
             }
         }
     }
-
-
 
 
     private void DestroyGrid()
@@ -373,11 +370,7 @@ public class UpgradeGrid : MonoBehaviour
         placedItems.Add(item);
         ItemAddedOrRemoved?.Invoke();
 
-
-
-
         CheckWhichCellsShouldShoot();
-
     }
 
 

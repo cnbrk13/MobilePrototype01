@@ -21,6 +21,7 @@ public class PerSecondTextUI : MonoBehaviour
     {
         GameManager.Instance.BaseShootSpeedChanged += UpdateText;
         GameManager.Instance.UpgradeGrid.ItemAddedOrRemoved += UpdateText;
+        UpdateText();
     }
 
     private void Update()
@@ -39,7 +40,7 @@ public class PerSecondTextUI : MonoBehaviour
 
     private void UpdateText()
     {
-        tmp.text = GameManager.Instance.UpgradeGrid.CalculatedShootSpeed * 2 + "/s";
+        tmp.text = GameManager.Instance.UpgradeGrid.CalculatedShootSpeed + "/s";
     }
 
 

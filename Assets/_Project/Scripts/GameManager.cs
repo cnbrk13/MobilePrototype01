@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour
     public Action<float> BaseShootSpeedChanged;
 
 
-
     private Tween currencyTween;
     private float currencyTweening = 0; // used to tween and display currency
 
@@ -65,8 +64,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //BaseShootSpeedChanged?.Invoke(baseShootSpeed);
-        LoadData();
     }
 
     private void Update()
@@ -78,33 +75,6 @@ public class GameManager : MonoBehaviour
 
     #region Methods
 
-
-
-    private void LoadData()
-    {
-        Debug.Log("Load Data");
-        Debug.Log("Load Currency: " + GameData.Currency);
-        Debug.Log("Load BaseShootSpeed: " + GameData.BaseShootSpeed);
-        Debug.Log("Load GridUnlocks: " + GameData.GridUnlocks);
-
-        SetCurrency(GameData.Currency);
-        SetBaseShootSpeed(GameData.BaseShootSpeed);
-        SetGridUnlocks(GameData.GridUnlocks);
-    }
-
-    private void SaveData()
-    {
-        Debug.Log("SaveData");
-        Debug.Log("SaveData Currency: " + currency);
-        Debug.Log("SaveData BaseShootSpeed: " + baseShootSpeed);
-        Debug.Log("SaveData GridUnlocks: " + upgradeGrid.UnlockedCells);
-        Debug.Log("SaveData CalculatedShootSpeed: " + upgradeGrid.CalculatedShootSpeed);
-
-        GameData.Currency = currency;
-        GameData.BaseShootSpeed = baseShootSpeed;
-        GameData.GridUnlocks = upgradeGrid.UnlockedCells;
-        GameData.CalculatedShootSpeed = upgradeGrid.CalculatedShootSpeed;
-    }
 
     public bool CanAfford(int amount)
     {
@@ -187,7 +157,6 @@ public class GameManager : MonoBehaviour
 
     public void ChangeToBattleScene()
     {
-        SaveData();
         SceneManager.LoadScene("GameplayScene");
     }
 
