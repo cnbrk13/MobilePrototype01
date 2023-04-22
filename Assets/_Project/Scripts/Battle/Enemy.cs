@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,10 +18,12 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private int startingHealth = 4;
 
+    private int currentHealth;
+    private Animator animator;
     private Rigidbody rigidbody;
     private bool isActivated = false;
-
     private Vector3 desiredVel = Vector3.zero;
+    private Slider slider;
 
 
     #endregion
@@ -30,11 +33,16 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        animator =  GetComponentInChildren<Animator>();
+        slider = GetComponentInChildren<Slider>();
+        currentHealth = startingHealth;
     }
 
     private void Start()
     {
-        LevelManager.Instance.Player.MoveAnimator.CheckpointReached += OnCheckpointReached;
+        LevelManager.Instance.Player.PlayerAnimator.CheckpointReached += OnCheckpointReached;
+        slider.value = 1;
+        animator.SetFloat("CycleOffsetVal", UnityEngine.Random.value);
     }
 
     private void Update()
@@ -75,9 +83,11 @@ public class Enemy : MonoBehaviour
     private void TookHitFrom(PlayerProjectile p)
     {
         p.Explode();
-        startingHealth--;
+        currentHealth--;
 
-        if (startingHealth == 0)
+        slider.value = currentHealth / (float)startingHealth;
+
+        if (currentHealth == 0)
         {
             Die();
         }

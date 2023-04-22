@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
@@ -16,6 +17,14 @@ public class PlayerWeapon : MonoBehaviour
     [SerializeField] private Transform projectileHolder;
     [SerializeField] private float defaultShootingIntervalInMs = 500f;
 
+    private Animator animator;
+    private List<ParticleSystem> particles;
+
+    
+    private readonly int shootAnimStartTrigger = Animator.StringToHash("StartShoot");
+    private readonly int shootAnimStopTrigger = Animator.StringToHash("StopShoot");
+
+
     private Coroutine shooting_Co;
     private bool isShooting = false;
 
@@ -25,7 +34,8 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Awake()
     {
-
+        animator = GetComponent<Animator>();
+        particles = GetComponentsInChildren<ParticleSystem>().ToList();
     }
 
     private void Start()
@@ -64,6 +74,15 @@ public class PlayerWeapon : MonoBehaviour
 
     #region Methods
 
+    public void StartShootAnim()
+    {
+        animator.SetTrigger(shootAnimStartTrigger);
+    }
+
+    public void StopShootAnim()
+    {
+        animator.SetTrigger(shootAnimStopTrigger);
+    }
 
     public void StartShooting()
     {
@@ -87,6 +106,8 @@ public class PlayerWeapon : MonoBehaviour
         }
 
         shooting_Co = StartCoroutine(ShootingLoop(intervalMilliseconds));
+
+        StartShootAnim();
     }
 
 
@@ -99,6 +120,8 @@ public class PlayerWeapon : MonoBehaviour
         }
 
         isShooting = false;
+
+        StopShootAnim();
     }
 
 
@@ -128,39 +151,43 @@ public class PlayerWeapon : MonoBehaviour
     [ContextMenu("Shoot")]
     private void Shoot()
     {
-        int howMany = GameData.HowManyAtOnce != -1 ? GameData.HowManyAtOnce : 5;
-
-        var projectiles = SpawnProjectiles(howMany);
+        var projectiles = SpawnProjectiles(4);
         PositionProjectiles(projectiles);
         MoveProjectiles(projectiles);
+        PlayParticles();
+    }
+
+    private void PlayParticles()
+    {
+        foreach (var p in particles)
+        {
+            p.Play();
+        }
     }
 
     private void PositionProjectiles(List<PlayerProjectile> projectiles)
     {
-        var parent = new GameObject("Projectiles");
-        parent.transform.SetParent(projectileHolder);
+        var holder = new GameObject("Projectiles").transform;
+        holder.SetParent(projectileHolder);
 
         var nozzlePos = nozzle.position;
-        float projSize = 0.025f;
 
+        Vector3 gap = 0.06f * Vector3.up;
 
-        nozzlePos = Vector3.zero;
-
-        Vector3 gap = projSize * Vector3.up;
-
-        var startPos = nozzlePos + ((projectiles.Count - 1) / 2 * gap);
+        var startPos = ((projectiles.Count - 1) / 2 * gap);
 
         for (int i = 0; i < projectiles.Count; i++)
         {
             var p = projectiles[i];
 
             p.transform.position = startPos - gap * i;
-            p.transform.SetParent(parent.transform);
+            p.transform.SetParent(holder);
+            p.transform.LookAt(LevelManager.Instance.Player.Body.transform.forward, Vector3.up);
         }
 
         // set parent and rotate the group
-        parent.transform.position = nozzle.position;
-        parent.transform.rotation = Quaternion.AngleAxis(-45, parent.transform.forward);
+        holder.transform.position = nozzle.position;
+
     }
 
 
@@ -168,7 +195,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         foreach (var p in projectiles)
         {
-            MoveProjectile(p);
+            MoveProjectile2(p);
         }
     }
 
@@ -187,7 +214,15 @@ public class PlayerWeapon : MonoBehaviour
         else
             targetPoint = ray.GetPoint(1000); // You may need to change this value according to your needs
                                               // Create the bullet and give it a velocity according to the target point computed before
+        
+        p.transform.LookAt(targetPoint, Vector3.up);
         p.GetComponent<Rigidbody>().velocity = (targetPoint - transform.position).normalized * projectileSpeed;
+    }
+
+    private void MoveProjectile2(PlayerProjectile p)
+    {
+        var player = LevelManager.Instance.Player;
+        p.GetComponent<Rigidbody>().velocity = player.Body.transform.forward * projectileSpeed;
     }
 
     #endregion

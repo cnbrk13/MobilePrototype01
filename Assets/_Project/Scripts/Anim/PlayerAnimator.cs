@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoveAnimator : MonoBehaviour
+public class PlayerAnimator : MonoBehaviour
 {
 
     #region Variables
     private Animator animator;
-    private readonly int animStartTrigger = Animator.StringToHash("StartAnim");
+
+    private readonly int moveAnimStartTrigger = Animator.StringToHash("StartMove");
 
     public Action<int> CheckpointReached;
 
@@ -46,8 +47,10 @@ public class PlayerMoveAnimator : MonoBehaviour
 
     public void StartMoving()
     {
-        animator.SetTrigger(animStartTrigger);
+        animator.SetTrigger(moveAnimStartTrigger);
     }
+
+
 
     /// <summary>
     /// Called on animation events (on checkpoints)

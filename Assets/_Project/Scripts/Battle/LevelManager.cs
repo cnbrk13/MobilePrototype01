@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour
     #region Variables
     [Tooltip("A reference to the player in scene")]
     [SerializeField] private Player player;
-    [SerializeField] private List<Enemy> activeEnemies = new();
+    [SerializeField] private List<Enemy> activeEnemies = new List<Enemy>();
 
 
     [SerializeField] private LevelEndScreenUI levelEndScreen;
@@ -57,7 +57,7 @@ public class LevelManager : MonoBehaviour
         // if this is the last enemy, resume player movement 
         if (activeEnemies.Count == 0)
         {
-            player.MoveAnimator.ContinueMoveAnimation();
+            player.PlayerAnimator.ContinueMoveAnimation();
         }
     }
 

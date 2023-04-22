@@ -29,7 +29,7 @@ public class LookAround : MonoBehaviour
     private Vector2 GetInput()
     {
         // Get the input vector. This can be changed to work with the new input system or even touch controls
-        Vector2 input = new(
+        Vector2 input = new Vector2(
             Input.GetAxis("Mouse X"),
             Input.GetAxis("Mouse Y")
         );

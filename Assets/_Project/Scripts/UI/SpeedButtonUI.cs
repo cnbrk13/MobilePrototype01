@@ -40,7 +40,7 @@ public class SpeedButtonUI : MonoBehaviour
 
     private void UpdateCostTMP()
     {
-        costTMP.text = GameManager.Instance.GridUpgradeCost.ToString();
+        costTMP.text = GameManager.Instance.SpeedUpgradeCost.ToString();
     }
 
     #endregion

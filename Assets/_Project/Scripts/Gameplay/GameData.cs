@@ -5,8 +5,7 @@ using UnityEngine;
 public static class GameData
 {
     public static int GridUnlocks = 0;
-    public static int Currency = 99999;
-    public static float BaseShootSpeed = 1.2f;
+    public static int Currency = 20000;
+    public static float BaseShootSpeed = 1f;
     public static float CalculatedShootSpeed = 0;
-    public static int HowManyAtOnce = -1;
 }
